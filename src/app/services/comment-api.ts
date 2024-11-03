@@ -1,3 +1,4 @@
+import type { Comment } from "../types"
 import { api } from "./api"
 
 export const commentApi = api.injectEndpoints({
