@@ -7,6 +7,7 @@ type Props = {
   className?: string
   type?: "button" | "submit" | "reset"
   fullWidth?: boolean
+  endContent?: JSX.Element
   color?:
     | "default"
     | "primary"
@@ -23,6 +24,7 @@ export const Button: React.FC<Props> = ({
   color,
   icon,
   fullWidth,
+  endContent,
   type,
 }) => {
   return (
@@ -34,6 +36,7 @@ export const Button: React.FC<Props> = ({
       className={className}
       type={type}
       fullWidth={fullWidth}
+      endContent={endContent}
     >
       {children}
     </NextButton>

@@ -12,6 +12,7 @@ import { LuSunMedium } from "react-icons/lu"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { logout, selectIsAuthenticated } from "../../../features/user/slice"
 import { useNavigate } from "react-router-dom"
+import { CiLogout } from "react-icons/ci"
 
 interface Props {
   className?: string
@@ -36,12 +37,12 @@ export const Header: FC<Props> = ({ className }) => {
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem
-          className="lg:flex text-xl cursor-pointer select-none"
+          className="lg:flex text-3xl cursor-pointer select-none"
           onClick={() => toggleTheme()}
         >
           {theme === "light" ? <FaRegMoon /> : <LuSunMedium />}
         </NavbarItem>
-        <NavbarItem className="lg:flex text-xl cursor-pointer">
+        <NavbarItem>
           {isAuthenticated && (
             <Button
               variant="flat"
@@ -49,7 +50,8 @@ export const Header: FC<Props> = ({ className }) => {
               className="gap-2"
               onClick={() => handleLogout()}
             >
-              Выйти
+              <CiLogout />
+              <span>Выйти</span>
             </Button>
           )}
         </NavbarItem>

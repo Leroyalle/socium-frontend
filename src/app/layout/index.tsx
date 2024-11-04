@@ -27,7 +27,7 @@ export const Layout: FC = () => {
         <div className="flex-1 p-4">
           <Outlet />
         </div>
-        <div className="flex-1 p-4">{!user && <Profile />}</div>
+        <div className="flex-2 p-4">{!user && <Profile />}</div>
       </Container>
     </>
   )
