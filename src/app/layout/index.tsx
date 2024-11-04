@@ -1,14 +1,10 @@
 import type { FC } from "react"
-import { Header } from "../../widgets/header"
+import { Header } from "../../widgets"
 import { Container } from "../../shared"
 import { NavBar } from "../../widgets"
 import { Outlet } from "react-router-dom"
 
-interface Props {
-  className?: string
-}
-
-export const Layout: FC<Props> = ({ className }) => {
+export const Layout: FC = () => {
   return (
     <>
       <Header />

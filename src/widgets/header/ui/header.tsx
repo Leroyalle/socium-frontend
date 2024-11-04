@@ -21,7 +21,10 @@ export const Header: FC<Props> = ({ className }) => {
         <p className="font-bold text-inherit">Socium</p>
       </NavbarBrand>
       <NavbarContent justify="end">
-        <NavbarItem className="lg:flex text-xl cursor-pointer">
+        <NavbarItem
+          className="lg:flex text-xl cursor-pointer select-none"
+          onClick={() => toggleTheme()}
+        >
           {theme === "light" ? <FaRegMoon /> : <LuSunMedium />}
         </NavbarItem>
         <NavbarItem className="lg:flex text-xl cursor-pointer">

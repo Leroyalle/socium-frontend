@@ -36,7 +36,7 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
         toggleTheme,
       }}
     >
-      <main className={`${theme} text-background bg-background`}>
+      <main className={`${theme} text-foreground bg-background`}>
         {children}
       </main>
     </ThemeContext.Provider>

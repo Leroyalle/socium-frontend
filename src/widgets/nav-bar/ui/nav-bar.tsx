@@ -12,13 +12,13 @@ export const NavBar: FC<Props> = ({ className }) => {
     <nav className={className}>
       <ul className="flex flex-col gap-5">
         <li>
-          <NavItem href={"/posts"} icon={<BsPostcard />}>
+          <NavItem href={"/"} icon={<BsPostcard />}>
             Посты
           </NavItem>
-          <NavItem href={"/Followers"} icon={<FiUsers />}>
+          <NavItem href={"/followers"} icon={<FiUsers />}>
             Подписчики
           </NavItem>
-          <NavItem href={"/Following"} icon={<BsPostcard />}>
+          <NavItem href={"/following"} icon={<BsPostcard />}>
             Подписки
           </NavItem>
         </li>
