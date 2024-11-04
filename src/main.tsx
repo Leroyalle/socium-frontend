@@ -15,6 +15,7 @@ import {
   Followers,
   Following,
 } from "./app/pages"
+import { Toaster } from "react-hot-toast"
 
 const container = document.getElementById("root")
 const router = createBrowserRouter([
@@ -62,6 +63,7 @@ if (container) {
           </ThemeProvider>
         </NextUIProvider>
       </Provider>
+      <Toaster />
     </React.StrictMode>,
   )
 } else {

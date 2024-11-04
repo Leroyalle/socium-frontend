@@ -2,13 +2,15 @@ import type { FC } from "react"
 import { useForm } from "react-hook-form"
 import type { TLogin } from "../types/login"
 import { Input } from "../../../entities"
-import { Button, Link } from "@nextui-org/react"
+import { Button } from "@nextui-org/react"
 import {
   useLazyCurrentQuery,
   useLoginMutation,
 } from "../../../app/services/user-api"
 import { useNavigate } from "react-router-dom"
 import { SwitchAuthAction } from "../../../shared"
+import { hasErrorField } from "../../../app/utils"
+import toast from "react-hot-toast"
 
 interface Props {
   setSelected: (value: "register") => void
@@ -35,7 +37,12 @@ export const Login: FC<Props> = ({ setSelected }) => {
   const onSubmit = async (data: TLogin) => {
     try {
       await login(data).unwrap()
-    } catch (error) {}
+      toast.success("Вы успешно вошли в аккаунт")
+    } catch (error) {
+      if (hasErrorField(error)) {
+        toast.error(`${error.data.error}`)
+      }
+    }
   }
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -45,6 +52,7 @@ export const Login: FC<Props> = ({ setSelected }) => {
         label={"Email"}
         required="Обязательное поле"
         type="email"
+        placeholder="example@yandex.ru"
       />
       <Input
         control={control}
@@ -52,8 +60,12 @@ export const Login: FC<Props> = ({ setSelected }) => {
         label={"Пароль"}
         required="Обязательное поле"
         type="password"
+        placeholder="********"
       />
-      <SwitchAuthAction setSelected={() => setSelected("register")} />
+      <SwitchAuthAction
+        setSelected={() => setSelected("register")}
+        type="login"
+      />
       <div className="flex gap-2 justify-end">
         <Button fullWidth color={"primary"} type="submit" isLoading={isLoading}>
           Войти

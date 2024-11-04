@@ -1,6 +1,6 @@
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react"
 import { useState, type FC } from "react"
-import { Login } from "../../../features"
+import { Login, Register } from "../../../features"
 
 interface Props {
   className?: string
@@ -24,7 +24,7 @@ export const Auth: FC<Props> = ({ className }) => {
                 <Login setSelected={setSelected} />
               </Tab>
               <Tab key={"register"} title={"Регистрация"}>
-                Регистрация
+                <Register setSelected={setSelected} />
               </Tab>
             </Tabs>
           </CardBody>

@@ -3,15 +3,15 @@ import type { FC } from "react"
 
 interface Props {
   setSelected: VoidFunction
-  className?: string
+  type: "login" | "register"
 }
 
-export const SwitchAuthAction: FC<Props> = ({ setSelected, className }) => {
+export const SwitchAuthAction: FC<Props> = ({ setSelected, type }) => {
   return (
     <p className="text-center text-small">
-      Нет аккаунта?{" "}
+      {type === "login" ? "Нет аккаунта? " : "Уже есть аккаунт? "}
       <Link size="sm" className="cursor-pointer" onPress={setSelected}>
-        Зарегестрируйтесь
+        {type === "login" ? "Зарегестрируйтесь" : "Войти"}
       </Link>
     </p>
   )
