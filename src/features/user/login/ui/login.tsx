@@ -1,11 +1,8 @@
 import type { FC } from "react"
 import { useForm } from "react-hook-form"
 import type { TLogin } from "../types/login"
-
 import { Button } from "@nextui-org/react"
-
 import { useNavigate } from "react-router-dom"
-
 import toast from "react-hot-toast"
 import {
   useLazyCurrentQuery,
@@ -40,6 +37,8 @@ export const Login: FC<Props> = ({ setSelected }) => {
   const onSubmit = async (data: TLogin) => {
     try {
       await login(data).unwrap()
+      await triggerCurrentQuery().unwrap
+      navigate("/")
       toast.success("Вы успешно вошли в аккаунт")
     } catch (error) {
       if (hasErrorField(error)) {
