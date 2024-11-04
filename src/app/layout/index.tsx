@@ -1,10 +1,22 @@
-import type { FC } from "react"
+import { useEffect, type FC } from "react"
 import { Header } from "../../widgets"
 import { Container } from "../../shared"
 import { NavBar } from "../../widgets"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
+import { selectIsAuthenticated, selectUser } from "../../features/user/slice"
+import { useAppSelector } from "../hooks"
 
 export const Layout: FC = () => {
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+  const user = useAppSelector(selectUser)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/auth")
+    }
+  }, [isAuthenticated])
+
   return (
     <>
       <Header />

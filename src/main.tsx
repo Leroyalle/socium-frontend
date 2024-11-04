@@ -16,6 +16,7 @@ import {
   Following,
 } from "./app/pages"
 import { Toaster } from "react-hot-toast"
+import { AuthGuard } from "./features"
 
 const container = document.getElementById("root")
 const router = createBrowserRouter([
@@ -59,7 +60,9 @@ if (container) {
       <Provider store={store}>
         <NextUIProvider>
           <ThemeProvider>
-            <RouterProvider router={router} />
+            <AuthGuard>
+              <RouterProvider router={router} />
+            </AuthGuard>
           </ThemeProvider>
         </NextUIProvider>
       </Provider>
