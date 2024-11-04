@@ -1,16 +1,19 @@
 import type { FC } from "react"
 import { useForm } from "react-hook-form"
 import type { TLogin } from "../types/login"
-import { Input } from "../../../entities"
+
 import { Button } from "@nextui-org/react"
+
+import { useNavigate } from "react-router-dom"
+
+import toast from "react-hot-toast"
 import {
   useLazyCurrentQuery,
   useLoginMutation,
-} from "../../../app/services/user-api"
-import { useNavigate } from "react-router-dom"
-import { SwitchAuthAction } from "../../../shared"
-import { hasErrorField } from "../../../app/utils"
-import toast from "react-hot-toast"
+} from "../../../../app/services/user-api"
+import { hasErrorField } from "../../../../app/utils"
+import { Input } from "../../../../entities"
+import { SwitchAuthAction } from "../../../../shared"
 
 interface Props {
   setSelected: (value: "register") => void

@@ -1,11 +1,11 @@
 import type { FC } from "react"
 import { useForm } from "react-hook-form"
-import { Input } from "../../../entities"
-import { useRegisterMutation } from "../../../app/services/user-api"
+import { Input } from "../../../../entities"
+import { useRegisterMutation } from "../../../../app/services/user-api"
 import type { TRegister } from "../types/register"
-import { SwitchAuthAction } from "../../../shared"
+import { SwitchAuthAction } from "../../../../shared"
 import { Button } from "@nextui-org/react"
-import { hasErrorField } from "../../../app/utils"
+import { hasErrorField } from "../../../../app/utils"
 import toast from "react-hot-toast"
 
 interface Props {
