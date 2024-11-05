@@ -6,26 +6,17 @@ import {
   Card as NextUiCard,
   Spinner,
 } from "@nextui-org/react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { RiDeleteBinLine } from "react-icons/ri"
 import { FcDislike } from "react-icons/fc"
 import { MdOutlineFavoriteBorder } from "react-icons/md"
 import { FaRegComment } from "react-icons/fa"
-import {
-  useLikePostMutation,
-  useUnlikePostMutation,
-} from "../../../app/services/like-api"
-import {
-  useLazyGetAllPostsQuery,
-  useLazyGetPostByIdQuery,
-} from "../../../app/services/post-api"
 import { useAppSelector } from "../../../app/hooks"
 import { selectCurrent } from "../../user/slice"
 import { User } from "../../../entities"
-import { formatToClientDate, hasErrorField } from "../../../app/utils"
+import { formatToClientDate } from "../../../app/utils"
 import { MetaInfo, Typography } from "../../../shared"
-import toast from "react-hot-toast"
-import { useDeleteCard } from "../lib"
+import { useDeleteCard, useLikePost } from "../lib"
 
 type Props = {
   avatarUrl: string
@@ -54,28 +45,10 @@ export const Card: React.FC<Props> = ({
   cardFor = "post",
   likedByUser = false,
 }) => {
-  const [likePost, likePostStatus] = useLikePostMutation()
-  const [unlikePost, unlikePostStatus] = useUnlikePostMutation()
-  const [triggerGetAllPosts] = useLazyGetAllPostsQuery()
-  const [triggerGetPostById] = useLazyGetPostByIdQuery()
-  const navigate = useNavigate()
   const currentUser = useAppSelector(selectCurrent)
-  console.log(likedByUser)
-  const onClickLikePost = async () => {
-    try {
-      likedByUser
-        ? await unlikePost(id).unwrap()
-        : await likePost({ postId: id }).unwrap()
-      await triggerGetAllPosts().unwrap()
-    } catch (error) {
-      if (hasErrorField(error)) {
-        toast.error(`${error.data.error}`)
-      }
-    }
-  }
-
+  const { onClickLikePost } = useLikePost(cardFor, id, likedByUser)
   const { onClickDelete, deleteCommentStatus, deletePostStatus } =
-    useDeleteCard(cardFor, id)
+    useDeleteCard(cardFor, id, commentId)
   return (
     <NextUiCard className="mb-5">
       <CardHeader className="justify-between items-center bg-transparent">

@@ -1,36 +1,36 @@
 import type { FC } from "react"
-import {
-  useCreatePostMutation,
-  useLazyGetAllPostsQuery,
-} from "../../../app/services/post-api"
+import { useLazyGetPostByIdQuery } from "../../../app/services/post-api"
 import { Controller, useForm } from "react-hook-form"
 import { Button, Textarea } from "@nextui-org/react"
 import { IoMdCreate } from "react-icons/io"
 import toast from "react-hot-toast"
 import { hasErrorField } from "../../../app/utils"
+import { useCreateCommentMutation } from "../../../app/services/comment-api"
 
 interface Props {
-  className?: string
+  id: string
 }
 
-export const CreatePost: FC<Props> = ({ className }) => {
-  const [createPost] = useCreatePostMutation()
-  const [triggerAllPosts] = useLazyGetAllPostsQuery()
+export const CreateComment: FC<Props> = ({ id }) => {
+  const [createComment] = useCreateCommentMutation()
+  const [triggerGetPostById] = useLazyGetPostByIdQuery()
 
   const {
     handleSubmit,
     control,
     formState: { errors },
     setValue,
-  } = useForm<{ post: string }>()
+  } = useForm<{ comment: string }>()
   const errorMessage = errors?.root?.message
 
-  const onSubmit = async (data: { post: string }) => {
+  const onSubmit = async (data: { comment: string }) => {
     try {
-      await createPost({ content: data.post }).unwrap()
-      await triggerAllPosts().unwrap()
-      setValue("post", "")
-      toast.success("Запись создана!")
+      if (id) {
+        await createComment({ content: data.comment, postId: id }).unwrap()
+        await triggerGetPostById(id).unwrap()
+        setValue("comment", "")
+        toast.success("Комментарий добавлен")
+      }
     } catch (error) {
       if (hasErrorField(error)) {
         toast.error(`${error.data.error}`)
@@ -42,7 +42,7 @@ export const CreatePost: FC<Props> = ({ className }) => {
     <form className="flex-grow" onSubmit={handleSubmit(onSubmit)}>
       <Controller
         control={control}
-        name="post"
+        name="comment"
         rules={{
           required: "Обязательное поле",
         }}
@@ -50,18 +50,18 @@ export const CreatePost: FC<Props> = ({ className }) => {
           <Textarea
             {...field}
             labelPlacement="outside"
-            placeholder="О чем думаете?"
+            placeholder="Напишите комментарий..."
             className="mb-5"
           />
         )}
       />
       <Button
-        color="success"
+        color="primary"
         className="flex-end"
         endContent={<IoMdCreate />}
         type="submit"
       >
-        Добавить пост
+        Прокомментировать
       </Button>
     </form>
   )

@@ -7,7 +7,9 @@ export const Posts: FC = () => {
   return (
     <>
       <div className="mb-10 w-full">
-        <CreatePost />
+        <div className="mb-10 w-full">
+          <CreatePost />
+        </div>
         {data &&
           data.length > 0 &&
           data.map(post => (
