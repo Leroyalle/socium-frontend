@@ -6,11 +6,7 @@ import { BASE_URL } from "../../../constans"
 import { Link } from "react-router-dom"
 import { MdOutlineAlternateEmail } from "react-icons/md"
 
-interface Props {
-  className?: string
-}
-
-export const Profile: FC<Props> = ({ className }) => {
+export const Profile: FC = () => {
   const current = useAppSelector(selectCurrent)
 
   if (!current) {

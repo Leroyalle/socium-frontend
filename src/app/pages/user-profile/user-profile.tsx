@@ -38,13 +38,16 @@ export const UserProfile: FC<Props> = ({ className }) => {
   const [unFollowUser] = useUnFollowUserMutation()
 
   useEffect(() => {
-    dispatch(resetUser())
+    return () => {
+      dispatch(resetUser())
+    }
   }, [])
 
   if (!data) {
     return null
   }
 
+  // TODO: перенести в хук и декомпозировать страницу
   const handleFollow = async () => {
     try {
       if (id) {
@@ -56,7 +59,6 @@ export const UserProfile: FC<Props> = ({ className }) => {
       }
     } catch (error) {
       if (hasErrorField(error)) {
-        console.log(error.data.error)
         toast.error(`${error.data.error}`)
       }
     }
@@ -105,7 +107,6 @@ export const UserProfile: FC<Props> = ({ className }) => {
             info={formatToClientDate(data.dateOfBirth)}
           />
           <ProfileInfo title="Обо мне" info={data.bio} />
-
           <div className="flex gap-2">
             <CountInfo count={data.followers.length} title="Подписчики" />
             <CountInfo count={data.following.length} title="Подписки" />
