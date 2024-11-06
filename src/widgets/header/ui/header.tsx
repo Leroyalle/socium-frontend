@@ -11,7 +11,7 @@ import { FaRegMoon } from "react-icons/fa"
 import { LuSunMedium } from "react-icons/lu"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { logout, selectIsAuthenticated } from "../../../features/user/slice"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { CiLogout } from "react-icons/ci"
 
 interface Props {
@@ -33,7 +33,18 @@ export const Header: FC<Props> = ({ className }) => {
   return (
     <Navbar className={className}>
       <NavbarBrand>
-        <p className="font-bold text-inherit">Socium</p>
+        <Link to="/" className="flex gap-x-1 items-center">
+          <img
+            src={theme === "light" ? "/logo-light.jpg" : "/logo-dark.jpg"}
+            alt="Logo"
+            width={70}
+            className="rounded-3xl"
+          />
+          <div className="">
+            <p className="font-bold text-inherit">Socium</p>
+            <p className="text-inherit italic">Share, create</p>
+          </div>
+        </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem

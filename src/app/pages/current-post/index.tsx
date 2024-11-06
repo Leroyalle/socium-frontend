@@ -9,7 +9,6 @@ export const CurrentPost: FC = () => {
   const { data } = useGetPostByIdQuery(params.id ?? "")
 
   if (!data) {
-    // TODO: navigate('/not-found)
     return <h1>Поста не существует</h1>
   }
 

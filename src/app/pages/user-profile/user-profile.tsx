@@ -48,7 +48,6 @@ export const UserProfile: FC<Props> = ({ className }) => {
     return null
   }
 
-  // TODO: перенести в хук и декомпозировать страницу
   const handleFollow = async () => {
     try {
       if (id) {
@@ -74,7 +73,7 @@ export const UserProfile: FC<Props> = ({ className }) => {
       }
     } catch (error) {
       if (hasErrorField(error)) {
-        toast.error(`${error}`)
+        toast.error(`${error.data.error}`)
       }
     }
   }

@@ -86,7 +86,7 @@ export const EditProfile: FC<Props> = ({ id, isOpen, onClose, user }) => {
         onClose()
       } catch (error) {
         if (hasErrorField(error)) {
-          toast.error(`${error}`)
+          toast.error(`${error.data.error}`)
         }
       }
     }
