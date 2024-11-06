@@ -65,6 +65,20 @@ export const UserProfile: FC<Props> = ({ className }) => {
     }
   }
 
+  const handleClose = async () => {
+    try {
+      if (id) {
+        await triggerCurrentQuery()
+        await triggerGetUserByIdQuery(id)
+        onClose()
+      }
+    } catch (error) {
+      if (hasErrorField(error)) {
+        toast.error(`${error}`)
+      }
+    }
+  }
+
   return (
     <>
       <GoBack />
@@ -75,7 +89,7 @@ export const UserProfile: FC<Props> = ({ className }) => {
             alt={data.name}
             width={200}
             height={200}
-            className="border-4 border-white"
+            className="border-4 border-white object-cover"
           />
           <div className="flex flex-col text-2xl font-bold gap-4 item-center">
             {data.name}
@@ -119,7 +133,7 @@ export const UserProfile: FC<Props> = ({ className }) => {
       <EditProfile
         id={id ?? ""}
         isOpen={isOpen}
-        onClose={() => onClose()}
+        onClose={handleClose}
         user={data}
       />
     </>

@@ -21,7 +21,7 @@ export const Profile: FC = () => {
         <Image
           src={`${BASE_URL}${avatarUrl}`}
           alt={"Аватар " + name}
-          className="object-cover rounded-xl"
+          className="object-cover rounded-xl aspect-square"
           width={370}
         />
       </CardHeader>

@@ -32,6 +32,8 @@ import {
 import { Input } from "../../../../entities"
 import { MdOutlineEmail } from "react-icons/md"
 import { ThemeContext } from "../../../../widgets/theme-provider/ui/theme-provider"
+import { hasErrorField } from "../../../../app/utils"
+import toast from "react-hot-toast"
 
 interface Props {
   id: string
@@ -56,6 +58,40 @@ export const EditProfile: FC<Props> = ({ id, isOpen, onClose, user }) => {
       dateOfBirth: user?.dateOfBirth,
     },
   })
+
+  const onChangeAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setSelectedFile(event.target.files[0])
+    }
+  }
+
+  const onSubmit = async (data: Partial<User>) => {
+    if (id) {
+      try {
+        const formData = new FormData()
+        data.name && formData.append("name", data.name)
+        data.email &&
+          data.email !== user?.email &&
+          formData.append("email", data.email)
+        data.dateOfBirth &&
+          formData.append(
+            "dateOfBirth",
+            new Date(data.dateOfBirth).toISOString(),
+          )
+        data.bio && formData.append("bio", data.bio)
+        data.location && formData.append("location", data.location)
+        selectedFile && formData.append("avatar", selectedFile)
+
+        await updateUser({ userData: formData, id }).unwrap()
+        onClose()
+      } catch (error) {
+        if (hasErrorField(error)) {
+          toast.error(`${error}`)
+        }
+      }
+    }
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -67,11 +103,15 @@ export const EditProfile: FC<Props> = ({ id, isOpen, onClose, user }) => {
           <>
             <ModalHeader>Изменение профиля</ModalHeader>
             <ModalBody>
-              <form className="flex flex-col gap-4">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-4"
+              >
                 <input
                   type="file"
                   name="avatarUrl"
                   placeholder="Выберите файл"
+                  onChange={onChangeAvatar}
                 />
                 <Input
                   name={"name"}
@@ -104,6 +144,7 @@ export const EditProfile: FC<Props> = ({ id, isOpen, onClose, user }) => {
                 <Input
                   name={"dateOfBirth"}
                   label={"День рождения"}
+                  type="date"
                   control={control}
                   endContent={<MdOutlineEmail />}
                   placeholder="День рождения"
