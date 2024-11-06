@@ -21,6 +21,7 @@ import {
 import { CiEdit } from "react-icons/ci"
 import { formatToClientDate, hasErrorField } from "../../utils"
 import toast from "react-hot-toast"
+import { EditProfile } from "../../../features"
 
 interface Props {
   className?: string
@@ -95,7 +96,9 @@ export const UserProfile: FC<Props> = ({ className }) => {
                 {data.isFollowing ? "Отписаться" : "Подписаться"}
               </Button>
             ) : (
-              <Button endContent={<CiEdit />}>Редактировать</Button>
+              <Button endContent={<CiEdit />} onClick={() => onOpen()}>
+                Редактировать
+              </Button>
             )}
           </div>
         </Card>
@@ -113,7 +116,12 @@ export const UserProfile: FC<Props> = ({ className }) => {
           </div>
         </Card>
       </div>
-      {/* <EditProfile isOpen={isOpen} onClose={handleClose} user={data} /> */}
+      <EditProfile
+        id={id ?? ""}
+        isOpen={isOpen}
+        onClose={() => onClose()}
+        user={data}
+      />
     </>
   )
 }
